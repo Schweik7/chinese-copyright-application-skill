@@ -9,13 +9,15 @@
 - 自动提取项目信息（名称、版本、描述、功能特性等）
 - 生成符合中国版权保护中心要求的申请材料
 - 支持自定义输出目录
+- 支持通过 `--exclude` 参数自定义排除文件/目录（支持 glob 模式）
+- 基于 `argparse` 的规范化 CLI，提供 `--help` 及友好的参数校验提示
 
 ## 使用方法
 
 ### 方法1：使用Python脚本
 
 ```bash
-python3 scripts/generate_copyright_docs.py <项目路径> [输出目录]
+python3 scripts/generate_copyright_docs.py <项目路径> [输出目录] [--exclude PATTERN ...]
 ```
 
 示例：
@@ -26,7 +28,19 @@ python3 scripts/generate_copyright_docs.py /path/to/your/project
 
 # 指定输出目录
 python3 scripts/generate_copyright_docs.py /path/to/your/project /path/to/output
+
+# 排除额外的目录或文件（支持 glob 模式）
+python3 scripts/generate_copyright_docs.py /path/to/your/project --exclude tests docs '*.min.js'
+python3 scripts/generate_copyright_docs.py /path/to/your/project ./output -e vendor '*.test.js'
 ```
+
+**命令行参数：**
+
+| 参数 | 说明 |
+|------|------|
+| `project_path` | 项目根目录路径（必填） |
+| `output_dir` | 输出目录，默认为 `<project_path>/copyright_docs` |
+| `--exclude` / `-e` | 额外排除的文件或目录，支持 glob 模式（如 `tests` `docs` `'*.min.js'`） |
 
 ### 方法2：在Trae IDE中使用
 
